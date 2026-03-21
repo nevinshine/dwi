@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Digital Waste Index</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <!-- ═══ Splash Screen ═══ -->
+    <div class="splash" id="splash">
+        <div class="splash-glow"></div>
+        <div class="splash-content">
+            <div class="splash-dot"></div>
+            <h1 class="splash-logo">DWI</h1>
+            <p class="splash-tagline">Digital Waste Index</p>
+            <div class="splash-bar"><div class="splash-bar-fill"></div></div>
+            <p class="splash-sub">Initializing carbon telemetry...</p>
+        </div>
+    </div>
+
+    <!-- ═══ Dashboard ═══ -->
+    <div class="bento-grid" id="dashboard" style="opacity: 0;">
+
+        <!-- ═══ ROW 1: Hero Score + Eco-Credits ═══ -->
+
+        <div class="bento-box hero-box span-2">
+            <div class="glow-orb"></div>
+            <div class="box-content">
+                <h3 class="box-title">Session Footprint</h3>
+                <p class="box-subtitle" id="score-context">Gathering baseline metrics.</p>
+                <div class="score-display">
+                    <span id="dwi-score-val" class="score-number">0.00</span>
+                    <span class="unit">g CO₂</span>
+                </div>
+                <div class="score-breakdown">
+                    <div class="metric-pill">CPU: <span id="carbon-cpu" class="highlight">0.00g</span></div>
+                    <div class="metric-pill">NET: <span id="carbon-net" class="highlight">0.00g</span></div>
+                    <div class="metric-pill">Session: <span id="hero-session-time" class="highlight">0m 0s</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bento-box eco-box">
+            <div class="box-content">
+                <div class="box-header-flex">
+                    <div>
+                        <h3 class="box-title">Eco-Credits</h3>
+                        <p class="box-subtitle">Your green impact</p>
+                    </div>
+                    <span class="streak-badge" id="streak-badge">🔥 <span id="streak-val">0</span></span>
+                </div>
+                <div class="eco-balance" id="credits-val">0.0</div>
+                <div class="eco-stats-row">
+                    <span class="eco-mini">Today: <strong id="credits-today">0.0</strong></span>
+                    <span class="eco-mini">Lifetime: <strong id="credits-lifetime">0.0</strong></span>
+                </div>
+                <button class="redeem-btn-mini" id="redeem-portal-btn" style="display: none;">
+                    🎁 Rewards Store
+                </button>
+            </div>
+            <div id="alert-banner" class="alert-mini" style="display: none;">
+                <p id="alert-msg">Waste detected.</p>
+                <button id="resolve-alert-btn">Fix & Earn <span id="alert-credits">0</span> EC</button>
+            </div>
+        </div>
+
+        <!-- ═══ ROW 2: Telemetry Cards ═══ -->
+
+        <div class="bento-box telemetry-box">
+            <h3 class="box-title">CPU Usage</h3>
+            <p class="box-subtitle">Processing load</p>
+            <div class="telemetry-wrapper">
+                <div class="telemetry-val" id="cpu-value">0.0<span class="unit-small">%</span></div>
+            </div>
+        </div>
+
+        <div class="bento-box telemetry-box">
+            <h3 class="box-title">Memory</h3>
+            <p class="box-subtitle" id="ram-detail">Active allocation</p>
+            <div class="telemetry-wrapper">
+                <div class="telemetry-val" id="ram-value">0<span class="unit-small">MB</span></div>
+            </div>
+        </div>
+
+        <div class="bento-box telemetry-box">
+            <h3 class="box-title">Network</h3>
+            <p class="box-subtitle">↓ RX / ↑ TX</p>
+            <div class="telemetry-wrapper">
+                <div class="telemetry-val">
+                    <span id="net-rx-value">0.0</span><span class="unit-small" id="net-rx-unit">KB/s</span>
+                    <span class="net-sep">/</span>
+                    <span id="net-tx-value">0.0</span><span class="unit-small" id="net-tx-unit">KB/s</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ ROW 3: Recent Actions ═══ -->
+
+        <div class="bento-box actions-box span-3">
+            <div class="box-header-flex">
+                <div>
+                    <h3 class="box-title">Recent Actions</h3>
+                    <p class="box-subtitle">Mitigations applied</p>
+                </div>
+                <button id="test-award-btn" class="pill-btn">+ Simulate Tab Close</button>
+            </div>
+            <ul id="history-list" class="bento-list">
+                <li class="empty-state">System optimized. Awaiting new data.</li>
+            </ul>
+        </div>
+
+        <!-- ═══ ROW 4: Cloud Cleaner ═══ -->
+
+        <div class="bento-box cleaner-box span-3">
+            <div class="box-header-flex">
+                <div>
+                    <h3 class="box-title">Cloud Cleaner</h3>
+                    <p class="box-subtitle">Find & reclaim duplicate files</p>
+                </div>
+            </div>
+            <div class="cleaner-input-row">
+                <input type="text" class="scan-input" id="scan-path" 
+                       placeholder="Enter directory path (e.g. ~/Documents)" 
+                       value="~/Downloads" />
+                <button class="pill-btn scan-action" id="scan-btn">Scan</button>
+            </div>
+            <div id="scan-results" style="display: none;">
+                <div class="scan-stat-grid">
+                    <div class="scan-stat"><span class="scan-stat-val" id="scan-total-files">0</span><span class="scan-stat-label">Files</span></div>
+                    <div class="scan-stat"><span class="scan-stat-val" id="scan-dup-groups">0</span><span class="scan-stat-label">Duplicates</span></div>
+                    <div class="scan-stat"><span class="scan-stat-val" id="scan-wasted">0 MB</span><span class="scan-stat-label">Wasted</span></div>
+                    <div class="scan-stat"><span class="scan-stat-val" id="scan-co2">0g</span><span class="scan-stat-label">CO₂ Cost</span></div>
+                </div>
+                <ul id="dup-list" class="bento-list"></ul>
+            </div>
+            <div class="scan-status-text" id="scan-status"></div>
+        </div>
+
+        <!-- ═══ ROW 5: Daily Report ═══ -->
+
+        <div class="bento-box report-box span-2">
+            <div class="box-header-flex">
+                <div>
+                    <h3 class="box-title">Daily Report</h3>
+                    <p class="box-subtitle" id="eod-date">—</p>
+                </div>
+                <button class="pill-btn" id="eod-refresh-btn">↻ Refresh</button>
+            </div>
+            <div class="report-grid">
+                <div class="report-metric bad">
+                    <span class="report-icon">🏭</span>
+                    <span class="report-val" id="eod-co2-generated">0.00</span>
+                    <span class="report-unit">g CO₂ generated</span>
+                </div>
+                <div class="report-metric good">
+                    <span class="report-icon">🌱</span>
+                    <span class="report-val" id="eod-co2-prevented">0.00</span>
+                    <span class="report-unit">g CO₂ prevented</span>
+                </div>
+                <div class="report-metric credits">
+                    <span class="report-icon">💚</span>
+                    <span class="report-val" id="eod-credits">0.0</span>
+                    <span class="report-unit">EC earned</span>
+                </div>
+                <div class="report-metric actions">
+                    <span class="report-icon">⚡</span>
+                    <span class="report-val" id="eod-actions">0</span>
+                    <span class="report-unit">actions taken</span>
+                </div>
+            </div>
+            <div class="report-footer">
+                <span>Avg CPU: <strong id="eod-avg-cpu">0</strong>%</span>
+                <span>Snapshots: <strong id="eod-snapshots">0</strong></span>
+                <span>Streak: <strong id="eod-streak">0</strong> 🔥</span>
+            </div>
+        </div>
+
+        <div class="bento-box stats-box">
+            <h3 class="box-title">System</h3>
+            <p class="box-subtitle">Session info</p>
+            <div class="stats-list">
+                <div class="stat-row">
+                    <span class="stat-label">Uptime</span>
+                    <span class="stat-val" id="uptime-value">—</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Snapshots</span>
+                    <span class="stat-val" id="snapshot-count">0</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Total RX</span>
+                    <span class="stat-val" id="total-rx">0 MB</span>
+                </div>
+                <div class="stat-row">
+                    <span class="stat-label">Total TX</span>
+                    <span class="stat-val" id="total-tx">0 MB</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="bento-box footer-box span-3">
+            <div class="footer-inner">
+                <span>🌱 DWI v0.3.0</span>
+                <span class="footer-dot">·</span>
+                <span id="last-update">Last update: —</span>
+                <span class="footer-dot">·</span>
+                <span id="daemon-status">Initializing</span>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        // Splash → Dashboard transition
+        setTimeout(() => {
+            document.getElementById('splash').classList.add('exit');
+            const dash = document.getElementById('dashboard');
+            dash.style.transition = 'opacity 0.8s ease';
+            dash.style.opacity = '1';
+        }, 3500);
+    </script>
+    <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,34 @@
+{
+  "productName": "Digital Waste Index",
+  "version": "0.1.0",
+  "identifier": "com.dwi.app",
+  "build": {
+    "frontendDist": "../src",
+    "beforeDevCommand": "",
+    "beforeBuildCommand": ""
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "title": "Digital Waste Index",
+        "width": 900,
+        "height": 900,
+        "resizable": true,
+        "fullscreen": false,
+        "maximized": true,
+        "center": true,
+        "decorations": true,
+        "transparent": false
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": []
+  }
+}

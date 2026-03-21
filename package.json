@@ -1,0 +1,14 @@
+{
+  "name": "dwi",
+  "version": "0.1.0",
+  "description": "Digital Waste Index - A Fitbit for Carbon",
+  "scripts": {
+    "tauri": "tauri",
+    "dev": "tauri dev",
+    "build": "tauri build"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@tauri-apps/cli": "^2"
+  }
+}
